@@ -6,11 +6,13 @@ In a store recognize a face as it traverses through the store.
 
 ## Overall Platform Goal
 1) Create a platform to easy movement recording. Ability to record/save/upload dances, sports movement etc. 
+        
         Tensorflow openpose is used for this 
         https://github.com/tensorlayer/openpose-plus
 
         Densepose Offers Cool Results
         http://densepose.org/ 
+        
 2) Track Movements and facecial sentiment of customers in a retail environment.
 
 ### Face Location
@@ -49,15 +51,15 @@ Pending: Pose estimation data
 Currently this is s3. Uploads are done through Post call and currently only accepts jpg/base64.
 Postman -> API-Gateway -> Cloud Storage/s3
 
-curl -X POST \
-https://c4039mgor5.execute-api.us-east-2.amazonaws.com/dev/rec \
--H 'Content-Type: application/json' \
--H 'cache-control: no-cache' \
--d '{
-   "method": "save",
-   "name": "abcMariusTest",
-   "img":"data:image/jpeg;base64"
-}'
+    curl -X POST \
+    https://c4039mgor5.execute-api.us-east-2.amazonaws.com/dev/rec \
+    -H 'Content-Type: application/json' \
+    -H 'cache-control: no-cache' \
+    -d '{
+       "method": "save",
+       "name": "abcMariusTest",
+       "img":"data:image/jpeg;base64"
+    }'
 
 ### Process Uploaded picture
 Cloud Storage -> Process Image -> Database Save
