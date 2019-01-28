@@ -4,27 +4,35 @@ face rec platform
 ## Purpose 
 In a store recognize a face as it traverses through the store.
 
+## Overall Platform Goal
+1) Create a platform to easy movement recording. Ability to record/save/upload dances, sports movement etc. http://densepose.org/ offers best way to do this so far.
+2) Track Movements and facecial sentiment of customers in a retail environment.
+
 ### Face Location
 Depending on camera position within a picture locate a person. 
 These environments are already heavily camara'ed an advantage. 
 They also already primarily focus on a specific area within an environment.
 Someone can easily say "at the bottom half of this camera is Aisle 2. at the top half is Aisle 3".
 
-AWS Rekognition
+### AWS Rekognition
+AWS Rekognition is used to process face detection.
 
 ### Pose Estimation
+Tensorflow openpose is used for this 
+https://github.com/tensorlayer/openpose-plus
+
 As the resolution gets better this data becomes more useful.
 Capturing movements accruately at 60 fps or even 30 fps is useful for video. 
 At 15 or 10 FPS its good for 2d games (even 3-7 FPS is good for 2D games).
 2D can be made to look 3D.
 
 ### Identifying Objects
-Easily identify view
-To simulate identify Letters or Text.
+Easily identify objects in view
+To simulate identify Letters or Text initially (Different Problem).
 
 ## Technical Details
-Below outlines how this take is accomplished. Updates will be provided here.
-Currently the cloud storage accepts picture uploads (s2).
+Below outlines how this task is accomplished. Updates will be provided here.
+Currently the cloud storage accepts picture uploads (s3).
 Lamba function is tirggered, processing uploaded picture. 
 Finally saving relavent data to database.
 Data saved is face ID and name if known.
