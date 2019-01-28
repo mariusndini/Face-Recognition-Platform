@@ -5,7 +5,12 @@ face rec platform
 In a store recognize a face as it traverses through the store.
 
 ## Overall Platform Goal
-1) Create a platform to easy movement recording. Ability to record/save/upload dances, sports movement etc. http://densepose.org/ offers best way to do this so far.
+1) Create a platform to easy movement recording. Ability to record/save/upload dances, sports movement etc. 
+        Tensorflow openpose is used for this 
+        https://github.com/tensorlayer/openpose-plus
+
+        Densepose Offers Cool Results
+        http://densepose.org/ 
 2) Track Movements and facecial sentiment of customers in a retail environment.
 
 ### Face Location
