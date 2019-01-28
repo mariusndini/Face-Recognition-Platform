@@ -22,6 +22,15 @@ At 15 or 10 FPS its good for 2d games (even 3-7 FPS is good for 2D games).
 Easily identify view
 To simulate identify Letters or Text.
 
+## Technical Details
+Below outlines how this take is accomplished. Updates will be provided here.
+Currently the cloud storage accepts picture uploads (s2).
+Lamba function is tirggered, processing uploaded picture. 
+
+### Upload picture to Cloud Storage
+Currently this is s3. Uploads are done through Post call and currently only accepts jpg.
+
+
 
 
 
