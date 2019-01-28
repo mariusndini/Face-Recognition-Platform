@@ -26,10 +26,36 @@ To simulate identify Letters or Text.
 Below outlines how this take is accomplished. Updates will be provided here.
 Currently the cloud storage accepts picture uploads (s2).
 Lamba function is tirggered, processing uploaded picture. 
+Finally saving relavent data to database.
+Data saved is face ID and name if known.
+
+Pending: Pose estimation data
+
 
 ### Upload picture to Cloud Storage
-Currently this is s3. Uploads are done through Post call and currently only accepts jpg.
+Currently this is s3. Uploads are done through Post call and currently only accepts jpg/base64.
+Postman -> API-Gateway -> Cloud Storage/s3
 
+curl -X POST \
+https://c4039mgor5.execute-api.us-east-2.amazonaws.com/dev/rec \
+-H 'Content-Type: application/json' \
+-H 'cache-control: no-cache' \
+-d '{
+   "method": "save",
+   "name": "abcMariusTest",
+   "img":"data:image/jpeg;base64"
+}'
+
+### Process Uploaded picture
+Cloud Storage -> Process Image -> Database Save
+1) Pull image from cloud storage. 
+2) AWS Rekognition is used to detect all faces in an image. 
+3) Jimp is then used to crop all images from the image. 
+4) Each individual face is processed through AWS Rekogntion 'searchFacesByImage' function. Return result is place into two buckets 4.a) Recognized Face or 4.b) New Face. New faces are saved to AWS Dynabo DB with Face ID and default 'unk' name.
+5) all images are saved to another bucket (individual faces only) tagged with time and faceID.
+6) all data is saved to Database for later processing
+
+### Data Processing
 
 
 
