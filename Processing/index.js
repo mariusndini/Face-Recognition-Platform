@@ -5,25 +5,39 @@ const s3 = new AWS.S3(config.S3);
 const rekognition = new AWS.Rekognition(config.rekognition)
 const bucket = 'facetrackmarius';
 var dyndb = new AWS.DynamoDB(config.dyndb);
+var snowflake = require('snowflake-sdk');
+
+var connection = snowflake.createConnection({
+    account: config.snowflake.account,
+    username: config.snowflake.username,
+    password: config.snowflake.password
+});
 
 exports.handler = async (event) => {
+    console.log(event.name, event.img, event.pose);
+
+    return (event.name, event.img, event.pose);
+
+    /*
     return cropFaces( event.Records[0].s3.object.key )
     .then((data)=>{
         console.log(JSON.stringify(data, null, 4) );
     }).catch((error)=>{
         console.log(error);
     });
-
+    */
 };
- 
 
+/*
 return cropFaces( 'kidamarius4.jpg'  )
 .then((data)=>{
     console.log(JSON.stringify(data, null, 4) );
-
+    saveSnowflake(data);
+    
 }).catch((error)=>{
     console.log(error);
 });
+*/
 
 
 
@@ -38,6 +52,15 @@ function cropFaces(img){
             if(error){
                 console.log(error);
             }else{
+
+                // log into snowflake to insert data later
+                connection.connect(function(err, conn) {
+                    if (err) {
+                        console.error('Unable to connect: ' + err.message);
+                    } else {
+                        console.log('Successfully connected as id: ' + connection.getId());
+                    }
+                });
 
                 return detectFaces(s3data.Body).then((facedata)=>{ // Detect all faces in an image
                     var faces = [];
@@ -77,7 +100,6 @@ function cropFaces(img){
                 }).then(()=>{
                     var end =  new Date().getTime();
                     funcdata.runtime =  (end - start)/1000;
-                    //console.log( convertJson(funcdata) );                    
                     resolve(funcdata);
 
                 })
@@ -93,8 +115,20 @@ function cropFaces(img){
 
 }
 
+function saveSnowflake(data){
+    var snowflakeQuery = {
+        sqlText: "insert into \"DEMO_DB\".\"PUBLIC\".\"FACETRACKING\"(select parse_json (column1) from values('" + JSON.stringify(data) + "'))",
+        complete: function(err, stmt, rows){
+            console.log(err, stmt, rows);
+        }
+    }
+    
+    connection.execute(snowflakeQuery);
 
-//convert json to row data
+}
+
+
+//convert json to row data-- MAY NOT BE NEEDED. SNOWFLAKE HANDLES THIS
 function convertJson(data){
     for(i=0; i < data.facesdetected.FaceDetails.length; i++){
         var f = data.facesdetected.FaceDetails[i];
