@@ -39,7 +39,7 @@ return cropFaces( 'kidamarius4.jpg'  )
 });
 */
 
-
+ 
 
 function cropFaces(img){
     var funcdata = {};

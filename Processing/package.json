@@ -1,7 +1,8 @@
 {
   "dependencies": {
     "aws-sdk": "^2.385.0",
-    "jimp": "^0.6.0"
+    "jimp": "^0.6.0",
+    "snowflake-sdk": "^1.1.10"
   },
   "devDependencies": {
     "canvas": "^2.3.1"
