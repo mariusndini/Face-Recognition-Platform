@@ -15,13 +15,16 @@ exports.handler = async (event) => {
     });
 
 };
+ 
 
 return cropFaces( 'kidamarius4.jpg'  )
 .then((data)=>{
-    //console.log(JSON.stringify(data, null, 4) );
+    console.log(JSON.stringify(data, null, 4) );
+
 }).catch((error)=>{
     console.log(error);
 });
+
 
 
 function cropFaces(img){
@@ -74,9 +77,7 @@ function cropFaces(img){
                 }).then(()=>{
                     var end =  new Date().getTime();
                     funcdata.runtime =  (end - start)/1000;
-                    
-                    console.log( convertJson(funcdata) );
-                    
+                    //console.log( convertJson(funcdata) );                    
                     resolve(funcdata);
 
                 })
@@ -92,8 +93,9 @@ function cropFaces(img){
 
 }
 
+
+//convert json to row data
 function convertJson(data){
-    console.log(data);
     for(i=0; i < data.facesdetected.FaceDetails.length; i++){
         var f = data.facesdetected.FaceDetails[i];
         var output = [];
@@ -104,8 +106,6 @@ function convertJson(data){
         output.push(f.BoundingBox.Top);
         
         return output.join(',');
-
-
 
     }
 }
