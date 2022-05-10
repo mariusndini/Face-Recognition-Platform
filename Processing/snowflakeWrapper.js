@@ -1,11 +1,7 @@
 var snowflake = require('snowflake-sdk');
 const config = require('./config.json');
 
-var connection = snowflake.createConnection({
-    account: config.snowflake.account,
-    username: config.snowflake.username,
-    password: config.snowflake.password
-});
+var connection = snowflake.createConnection(config.snowflake);
 
 module.exports = {
     connect: function(){
@@ -15,6 +11,10 @@ module.exports = {
                     if(err.code == 405502){
                         resolve(connection);
                     }
+                    if(err.code == 405503){
+                        resolve(connection);
+                    }
+
                     console.log(JSON.stringify(err) );
                     reject(err);
                 } else {
@@ -25,10 +25,10 @@ module.exports = {
 
     },
 
-    saveData: function(dbConn, data){
+    runSQL: function(dbConn, SQL){
         return new Promise((resolve, reject) =>{
             var snowflakeQuery = {
-                sqlText: "insert into \"DEMO_DB\".\"PUBLIC\".\"FACETRACKING\"(select parse_json (column1) from values('" + JSON.stringify(data) + "'))",
+                sqlText: SQL,
                 complete: function(err, stmt, rows){
                     if(err){
                         reject(err);
@@ -36,9 +36,35 @@ module.exports = {
                     resolve(rows);
                 }
             }
+            
             dbConn.execute(snowflakeQuery);
         })  
     },
+    getSQL: function(dbConn, sql ){
+        return new Promise(function(resolve, reject){
+            var statement = dbConn.execute({
+                sqlText: sql
+            })//end execute SQL
+    
+            var stream = statement.streamRows();
+            var myData = [];
+            stream.on('error', function(err) {
+                reject( err );
+            });
+            
+            stream.on('data', function(row) {
+                myData.push(row);
+            });
+            
+            stream.on('end', function() {
+                resolve(myData);
+            });
+    
+    
+    
+        })//end promise
+    },
+
     disconnect: function(){
         return new Promise((resolve, reject)=>{
             connection.destroy(function(err, conn) {

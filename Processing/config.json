@@ -1,33 +1,33 @@
 {
     "amazon":{
         "UserPoolId": "us-east-2_7EEHLBK1g",
-        "ClientId": "s3ofc9fgi83k8mnlce3lt0e5v"
+        "ClientId": ""
     },
     
     "rekognition":{
-        "accessKeyId": "AKIAIHLZJJKAOE33FGEQ",
-        "secretAccessKey": "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",
+        "accessKeyId": "",
+        "secretAccessKey": "",
         "region": "us-west-2",
         "apiVersion": "2016-06-27"
     },
 
     "S3":{
         "Bucket":"rekimagesmarius",
-        "accessKeyId": "AKIAIHLZJJKAOE33FGEQ",
-        "secretAccessKey": "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"
+        "accessKeyId": "",
+        "secretAccessKey": ""
     },
 
     "dyndb":{ 
         "region": "us-east-2",
-        "accessKeyId": "AKIAIHLZJJKAOE33FGEQ",
-        "secretAccessKey": "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",
+        "accessKeyId": "",
+        "secretAccessKey": "",
         "apiVersion": "2012-08-10"
     },
 
     "polly":{
         "region": "us-east-2",
-        "accessKeyId": "AKIAIHLZJJKAOE33FGEQ",
-        "secretAccessKey": "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"
+        "accessKeyId": "",
+        "secretAccessKey": ""
     }
 }
 
